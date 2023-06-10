@@ -1,0 +1,178 @@
+:root {
+    --hue1: 120;
+    --hue2: 120;
+    --luminance1: 25%;
+    --luminance2: 25%;
+    --health1: 100%;
+    --health2: 100%;
+    --ko-text: none;
+    --title-size: 16rem;
+    --infinity: block;
+    --countdown: none;
+}
+
+.grid {
+    padding-top: 0.33rem;
+    display: inline-grid;
+    grid-template-columns: 42vw auto 42vw;
+    width: 100%;
+}
+.grid-item {
+    display: flex;
+    align-items: center;
+}
+.grid-left {
+    justify-content: left;
+    justify-items: left;
+}
+.grid-center {
+    justify-content: center;
+    justify-items: center;
+}
+.grid-right {
+    justify-content: right;
+    justify-items: right;
+}
+
+.healthborder {
+    width: 40vw;
+    height: 3.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ccc;
+}
+.healthbar {
+    background-color: #222;
+    height: calc(100% - 1.2rem);
+    width: calc(100% - 1.2rem);
+}
+.health {
+    height: 100%;
+}
+
+.text {
+    font-family: "Retro Gaming", monospace;
+    color: #ccc;
+}
+.names {
+    font-size: 3rem;
+}
+.title-text {
+    display: var(--ko-text);
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: var(--title-size);
+}
+.subtitle-text {
+    display: var(--ko-text);
+    position: absolute;
+    top: 65%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3.5rem;
+}
+.text-left {
+    text-align: left;
+}
+.text-center {
+    text-align: center;
+}
+.text-right {
+    text-align: right;
+}
+
+.leftbar {
+    clip-path: polygon(
+        0% 0%,
+        100% 0%,
+        100% calc(100% - 1.5rem),
+        calc(100% - 0.5rem) calc(100% - 1.5rem),
+        calc(100% - 0.5rem) calc(100% - 1rem),
+        calc(100% - 1rem) calc(100% - 1rem),
+        calc(100% - 1rem) calc(100% - 0.5rem),
+        calc(100% - 1.5rem) calc(100% - 0.5rem),
+        calc(100% - 1.5rem) 100%,
+        0% 100%
+    );
+}
+.rightbar {
+    clip-path: polygon(
+        0% 0%,
+        0% calc(100% - 1.5rem),
+        calc(0% + 0.5rem) calc(100% - 1.5rem),
+        calc(0% + 0.5rem) calc(100% - 1rem),
+        calc(0% + 1rem) calc(100% - 1rem),
+        calc(0% + 1rem) calc(100% - 0.5rem),
+        calc(0% + 1.5rem) calc(100% - 0.5rem),
+        calc(0% + 1.5rem) 100%,
+        100% 100%,
+        100% 0%
+    );
+}
+
+#health1 {
+    width: var(--health1);
+    background-color: hsl(var(--hue1), 100%, var(--luminance1));
+}
+#health2 {
+    width: var(--health2);
+    background-color: hsl(var(--hue2), 100%, var(--luminance2));
+}
+#counter {
+    width: 100%;
+    grid-column: 2;
+    grid-row: 1 / 3;
+}
+#counterimg {
+    max-height: 4rem;
+    width: 100%;
+    min-width: 2.5rem;
+    display: var(--infinite);
+}
+#countertxt {
+    font-size: 4rem;
+    display: var(--countdown);
+}
+
+body {
+    background-color: #000;
+}
+
+@keyframes vibrate {
+    0% {
+        transform: translate(0px, 0px);
+    }
+    10% {
+        transform: translate(-5px, 5px);
+    }
+    20% {
+        transform: translate(5px, 0px);
+    }
+    30% {
+        transform: translate(-5px, -5px);
+    }
+    40% {
+        transform: translate(5px, 0px);
+    }
+    50% {
+        transform: translate(0px, 0px);
+    }
+    60% {
+        transform: translate(-5px, 5px);
+    }
+    70% {
+        transform: translate(5px, 0px);
+    }
+    80% {
+        transform: translate(-5px, -5px);
+    }
+    90% {
+        transform: translate(5px, 0px);
+    }
+    100% {
+        transform: translate(0px, 0px);
+    }
+}
