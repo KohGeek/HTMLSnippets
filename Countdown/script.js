@@ -3,6 +3,9 @@ let minSpeed = 5;
 let speedup = false;
 let count = false;
 let time = [6, 0, 0, 0];
+let beepCount = 0;
+let audio = new Audio('beep.mp3');
+
 
 function flipTo(digit, n) {
     var current = digit.attr('data-num');
@@ -107,7 +110,7 @@ function readTime() {
 }
 
 function colourChange(time) {
-    let black = new Color("srgb", [0, 0, 0]);
+    let black = new Color("srgb", [0.2, 0.2, 0.2]);
     let colourRange = black.range("red", {
         space: "srgb", // interpolation space
         outputSpace: "srgb"
@@ -125,6 +128,12 @@ function startCountdown() {
         updateTime(time);
         speedRatio = speedup ? speedRatio * 1.2 : 1;
         colourChange(time);
+
+        beepCount++;
+        if (beepCount == 10) {
+            audio.play();
+            beepCount = 0;
+        }
     }
     setExactTimeout(function () {
         startCountdown(time);
@@ -164,7 +173,6 @@ jQuery(function () {
     }
 
     setTime(time, false);
-    colourChange(time);
 
     // n for increasing min speed
     $(document).keypress(function (e) {
@@ -172,6 +180,8 @@ jQuery(function () {
             speedup = !speedup;
         } else if (e.which == 114) {
             time = [6, 0, 0, 0];
+            setTime(time, true);
+            updateTime(time);
         } else if (e.which == 115) {
             count = !count;
         } else if (e.which == 109) {
