@@ -10,8 +10,8 @@ All libraries are loaded offline in case of internet issues.
 
 ## Countdown
 
-A flipper-style countdown that can save to LocalStorage, speed up at will, pause at will. Changes colour as time apporaches 0.
+A flipper-style countdown that can save to LocalStorage, speed up at will, pause at will. Changes colour as time approaches 0.
 
-## StreetFighter
+## FighterHealthBar
 
 Two healthbar to simulate a street fight, controlled by standard controller. Works in timer and unlimited mode. Can reset health.

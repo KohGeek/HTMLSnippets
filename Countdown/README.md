@@ -1,11 +1,13 @@
 # Countdown Clock
 
-Countdown timer built for adding tension to a live drama.
+Countdown timer built for adding tension to a live drama. Dependencies are loaded offline in case of internet issue, with the exception of the `Oswald` font.
 
 Reference:
 
-- beep.mp3 (Epidemic Sounds)
-- Original Code [https://codepen.io/blucube/pen/pgqRKr]
+- beep.mp3 from Epidemic Sounds
+- [Original Code](https://codepen.io/blucube/pen/pgqRKr)
+- jquery.min.js from jQuery
+- color.global.min.js from ColorJS
 
 Base features:
 
