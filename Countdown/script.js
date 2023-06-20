@@ -91,21 +91,20 @@ function reduceTime() {
 }
 
 // update time to cookies
-function updateTime() {
-    localStorage.setItem('time', time);
+function updateTime(str) {
+    localStorage.setItem('time' + str, time);
 }
 
 // read time from cookies
-function readTime() {
-    data = localStorage.getItem('time');
+function readTime(str) {
+    data = localStorage.getItem('time' + str);
     if (data == null) {
-        data = [6, 0, 0, 0];
-    } else {
-        data = data.split(',');
-        data = data.map(function (x) {
-            return parseInt(x);
-        });
+        data = "6,0,0,0";
     }
+    data = data.split(',');
+    data = data.map(function (x) {
+        return parseInt(x);
+    });
     return data;
 }
 
@@ -115,17 +114,22 @@ function colourChange(time) {
         space: "srgb", // interpolation space
         outputSpace: "srgb"
     });
-    percentage = clamp(1 - (time[1] * 60 + time[2] - 180) / (6 * 60), 0, 1);
+    percentage = clamp(1 - (time[0] * 3600 + time[1] * 60 + time[2]) / 20, 0, 1);
     document.documentElement.style.setProperty('--text-colour', colourRange(percentage));
+}
+
+function timeCalculation() {
+    totalTimeinMilli = time[0] * 3600 * 10 + time[1] * 60 * 10 + time[2] * 10 + time[3];
+    return totalTimeinMilli;
 }
 
 // start countdown
 function startCountdown() {
     console.log("Count:" + count)
-    if (count) {
+    if (count && timeCalculation() > 2) {
         setTime(time, true);
         time = reduceTime(time);
-        updateTime(time);
+        updateTime("0");
         speedRatio = speedup ? speedRatio * 1.2 : 1;
         colourChange(time);
 
@@ -134,6 +138,19 @@ function startCountdown() {
             audio.play();
             beepCount = 0;
         }
+    } else if (timeCalculation() < 100) {
+        colourChange(time);
+        beepCount++;
+        if (beepCount == 15) {
+            if (document.documentElement.style.getPropertyValue('--text-colour') != "white") {
+                document.documentElement.style.setProperty('--text-colour', 'white');
+            } else {
+                colourChange(time);
+            }
+            beepCount = 0;
+        }
+    } else {
+        colourChange(time);
     }
     setExactTimeout(function () {
         startCountdown(time);
@@ -166,28 +183,37 @@ function clamp(num, min, max) {
 
 jQuery(function () {
 
-    time = readTime();
-
-    if (time == null) {
-        time = [6, 0, 0, 0];
-    }
+    time = readTime("0");
 
     setTime(time, false);
 
     // n for increasing min speed
-    $(document).keypress(function (e) {
-        if (e.which == 13) {
-            speedup = !speedup;
-        } else if (e.which == 114) {
-            time = [6, 0, 0, 0];
+    // 1 for saving time slot 1
+    // ctrl + 1 for loading time slot 1
+    // 2 for saving time slot 2
+    // ctrl + 2 for loading time slot 2
+    document.addEventListener('keydown', function (e) {
+        // if (e.key == "Enter") {
+        //     speedup = !speedup;
+        // } else if (e.key == "r") {
+        if (e.key == "r") {
+            time = [1, 21, 10, 5];
             setTime(time, true);
-            updateTime(time);
-        } else if (e.which == 115) {
+            updateTime("0");
+        } else if (e.key == "s") {
             count = !count;
-        } else if (e.which == 109) {
-            minSpeed = Math.max(minSpeed - 2.5, 1);
-        } else if (e.which == 110) {
-            minSpeed = Math.min(minSpeed + 2.5, 50);
+            // } else if (e.key == "m") {
+            //     minSpeed = Math.max(minSpeed - 2.5, 1);
+            // } else if (e.key == "n") {
+            //     minSpeed = Math.min(minSpeed + 2.5, 50);
+        } else if (e.key == "1") {
+            time = [0, 20, 0, 0];
+            setTime(time, true);
+            updateTime("0");
+        } else if (e.key == "2") {
+            time = [0, 0, 40, 0];
+            setTime(time, true);
+            updateTime("0");
         }
     });
 
